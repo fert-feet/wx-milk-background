@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zu.milkbackground.mapper.StoreMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zu.milkbackground.po.Store">
+        <id column="id" property="id" />
+        <result column="store_name" property="storeName" />
+        <result column="status" property="status" />
+        <result column="distance" property="distance" />
+        <result column="hot_line" property="hotLine" />
+        <result column="is_collection" property="isCollection" />
+        <result column="begin_time" property="beginTime" />
+        <result column="end_time" property="endTime" />
+        <result column="address" property="address" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, store_name, status, distance, hot_line, is_collection, begin_time, end_time, address
+    </sql>
+
+</mapper>

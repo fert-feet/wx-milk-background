@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zu.milkbackground.mapper.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zu.milkbackground.po.User">
+        <id column="id" property="id" />
+        <result column="nick_name" property="nickName" />
+        <result column="avatar_url" property="avatarUrl" />
+        <result column="member_score" property="memberScore" />
+        <result column="open_id" property="openId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, nick_name, avatar_url, member_score, open_id
+    </sql>
+
+</mapper>

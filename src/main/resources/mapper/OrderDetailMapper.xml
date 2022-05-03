@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zu.milkbackground.mapper.OrderDetailMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zu.milkbackground.po.OrderDetail">
+        <id column="id" property="id" />
+        <result column="order_id" property="orderId" />
+        <result column="commodity_id" property="commodityId" />
+        <result column="number" property="number" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, order_id, commodity_id, number
+    </sql>
+
+</mapper>

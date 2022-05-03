@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zu.milkbackground.mapper.OrderMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zu.milkbackground.po.Order">
+        <id column="id" property="id" />
+        <result column="status" property="status" />
+        <result column="take_number" property="takeNumber" />
+        <result column="store_id" property="storeId" />
+        <result column="order_total" property="orderTotal" />
+        <result column="order_code" property="orderCode" />
+        <result column="order_time" property="orderTime" />
+        <result column="remarks" property="remarks" />
+        <result column="user_id" property="userId" />
+        <result column="state_name" property="stateName" />
+        <result column="phone_number" property="phoneNumber" />
+        <result column="sum_num" property="sumNum" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, status, take_number, store_id, order_total, order_code, order_time, remarks, user_id, state_name, phone_number, sum_num
+    </sql>
+
+</mapper>
