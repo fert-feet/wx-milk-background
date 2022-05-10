@@ -4,10 +4,9 @@ package com.zu.milkbackground.controller;
 import com.zu.milkbackground.DTO.CreateOrderDTO;
 import com.zu.milkbackground.DTO.OrderDetailDTO;
 import com.zu.milkbackground.Vo.OrderDetailVo;
-import com.zu.milkbackground.Vo.ReturnVo.OrderVo;
-import com.zu.milkbackground.Vo.ReturnVo.Response;
-import com.zu.milkbackground.Vo.ReturnVo.ResponseEnum;
-import com.zu.milkbackground.po.Commodity;
+import com.zu.milkbackground.Vo.OrderVo;
+import com.zu.milkbackground.utils.returnUtils.Response;
+import com.zu.milkbackground.utils.returnUtils.ResponseEnum;
 import com.zu.milkbackground.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,53 +33,45 @@ public class OrderController {
 
     /**
      * 查询订单详情
+     *
      * @param dto
      * @return
      */
     @PostMapping("/detail")
-    public Response getOrderDetailInfo(@RequestBody OrderDetailDTO dto){
-        if (dto==null||dto.getUserId()==null||dto.getOrderId()==null){
+    public Response getOrderDetailInfo(@RequestBody OrderDetailDTO dto) {
+        if (dto == null || dto.getUserId() == null || dto.getOrderId() == null) {
             return Response.error(ResponseEnum.FAIL);
         }
-        OrderDetailVo orderDetail=orderService.OrderDetailAble(dto.getUserId(),dto.getOrderId());
-        if (orderDetail==null){
-            return Response.error(ResponseEnum.FAIL);
-        }
-        return Response.success(orderDetail);
+        System.out.println(dto);
+        return orderService.OrderDetailAble(dto.getUserId(), dto.getOrderId());
     }
 
     /**
      * 查询用户所有订单
+     *
      * @param dto
      * @return
      */
     @PostMapping("/info")
-    public Response getAllOrderInfo(@RequestBody OrderDetailDTO dto){
-        if (dto==null||dto.getUserId()==null){
+    public Response getAllOrderInfo(@RequestBody OrderDetailDTO dto) {
+        if (dto == null || dto.getUserId() == null) {
             return Response.error(ResponseEnum.FAIL);
         }
-        List<OrderVo> orderList=orderService.AllOrderInfoAble(dto.getUserId());
-        if(orderList==null){
-            return Response.error(ResponseEnum.FAIL);
-        }
-        return Response.success(orderList);
+        return orderService.AllOrderInfoAble(dto.getUserId());
+
     }
 
     /**
      * 新建订单
+     *
      * @param dto
      * @return
      */
     @PostMapping("/create")
-    public Response createOrder(@RequestBody CreateOrderDTO dto){
-        System.out.println(dto);
-        if (dto==null||dto.getUserId()==null||dto.getStoreInfo()==null){
+    public Response createOrder(@RequestBody CreateOrderDTO dto) {
+        if (dto == null || dto.getUserId() == null || dto.getStoreInfo() == null) {
             return Response.error(ResponseEnum.FAIL);
         }
-        int orderId= orderService.CreateOrderAble(dto);
-        if(orderId<1){
-            return Response.error(ResponseEnum.FAIL);
-        }
-        return Response.success(orderId);
+        return orderService.CreateOrderAble(dto);
     }
 }

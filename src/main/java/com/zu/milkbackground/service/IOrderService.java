@@ -2,11 +2,8 @@ package com.zu.milkbackground.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zu.milkbackground.DTO.CreateOrderDTO;
-import com.zu.milkbackground.Vo.OrderDetailVo;
-import com.zu.milkbackground.Vo.ReturnVo.OrderVo;
 import com.zu.milkbackground.po.Order;
-
-import java.util.List;
+import com.zu.milkbackground.utils.returnUtils.Response;
 
 /**
  * <p>
@@ -25,19 +22,21 @@ public interface IOrderService extends IService<Order> {
      * @param orderId
      * @return
      */
-    OrderDetailVo OrderDetailAble(Integer userId, Integer orderId);
+    Response OrderDetailAble(Integer userId, Integer orderId);
 
     /**
      * 根据用户id查询所有订单
+     *
      * @param userId
      * @return
      */
-    List<OrderVo> AllOrderInfoAble(Integer userId);
+    Response AllOrderInfoAble(Integer userId);
 
     /**
      * 创建订单
+     *
      * @param dto
      * @return
      */
-    int CreateOrderAble(CreateOrderDTO dto);
+    Response CreateOrderAble(CreateOrderDTO dto);
 }

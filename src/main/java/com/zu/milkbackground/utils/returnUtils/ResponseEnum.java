@@ -1,4 +1,4 @@
-package com.zu.milkbackground.Vo.ReturnVo;
+package com.zu.milkbackground.utils.returnUtils;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

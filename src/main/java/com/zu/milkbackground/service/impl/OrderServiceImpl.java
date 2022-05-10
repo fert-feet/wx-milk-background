@@ -5,12 +5,15 @@ import com.zu.milkbackground.DTO.CreateOrderDTO;
 import com.zu.milkbackground.Vo.CommodityVo;
 import com.zu.milkbackground.Vo.OrderDetailVo;
 import com.zu.milkbackground.Vo.ProductDetailVo;
-import com.zu.milkbackground.Vo.ReturnVo.OrderVo;
+import com.zu.milkbackground.Vo.OrderVo;
 import com.zu.milkbackground.mapper.OrderDetailMapper;
 import com.zu.milkbackground.mapper.OrderMapper;
 import com.zu.milkbackground.po.Order;
 import com.zu.milkbackground.po.OrderDetail;
 import com.zu.milkbackground.service.IOrderService;
+import com.zu.milkbackground.utils.redisUtils.RedisService;
+import com.zu.milkbackground.utils.returnUtils.Response;
+import com.zu.milkbackground.utils.returnUtils.ResponseEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +35,9 @@ import java.util.UUID;
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements IOrderService {
 
     @Autowired
+    private RedisService redisService;
+
+    @Autowired
     private OrderMapper orderMapper;
 
     @Autowired
@@ -45,30 +51,44 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
      * @return
      */
     @Override
-    public OrderDetailVo OrderDetailAble(Integer userId, Integer orderId) {
+    public Response OrderDetailAble(Integer userId, Integer orderId) {
         OrderDetailVo orderDetail = orderMapper.findOrderDetail(userId, orderId);
-        List<ProductDetailVo> productDetail=orderMapper.findProductDetail(orderId);
-        orderDetail.setProductDetail(productDetail);
-        return orderDetail;
+        System.out.println(orderDetail);
+        if (orderDetail != null) {
+            List<ProductDetailVo> productDetail=orderMapper.findProductDetail(orderId);
+            orderDetail.setProductDetail(productDetail);
+            return Response.success(orderDetail);
+        };
+        return Response.error(ResponseEnum.FAIL);
     }
 
     @Override
-    public List<OrderVo> AllOrderInfoAble(Integer userId) {
-        List<OrderVo> orderList = orderMapper.findAllOrder(userId);
-        for(OrderVo order:orderList){
-            List<ProductDetailVo> productDetail = orderMapper.findProductDetail(order.getId());
-            order.setProductDetail(productDetail);
+    public Response AllOrderInfoAble(Integer userId) {
+        List<OrderVo> orderVos = (List<OrderVo>) redisService.getRT("orderList");
+        if (orderVos!=null){
+            return Response.success(orderVos);
         }
-        return orderList;
+        List<OrderVo> orderList = orderMapper.findAllOrder(userId);
+        if (orderList!=null){
+            for(OrderVo order:orderList){
+                List<ProductDetailVo> productDetail = orderMapper.findProductDetail(order.getId());
+                order.setProductDetail(productDetail);
+            }
+            redisService.setRT("orderList",orderList);
+            redisService.setTime("orderList",200);
+            return Response.success(orderList);
+        }
+        return Response.error(ResponseEnum.FAIL);
     }
 
     /**
      * 创建订单
+     *
      * @param dto
      * @return
      */
     @Override
-    public int CreateOrderAble(CreateOrderDTO dto) {
+    public Response CreateOrderAble(CreateOrderDTO dto) {
         Random random = new Random();
         String orderCode= UUID.randomUUID().toString().replace("-","");
         LocalDateTime nowTime = LocalDateTime.now();
@@ -92,6 +112,10 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
             orderDetail.setNumber(commodity.getNumber());
             orderDetailMapper.insert(orderDetail);
         }
-        return order.getId();
+        if (order.getId()>=1){
+            redisService.remove("orderList");
+            return Response.success(order.getId());
+        }
+        return Response.error(ResponseEnum.FAIL);
     }
 }

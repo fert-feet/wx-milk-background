@@ -2,8 +2,9 @@ package com.zu.milkbackground.controller;
 
 
 import com.zu.milkbackground.Vo.CommodityVo;
-import com.zu.milkbackground.Vo.ReturnVo.Response;
-import com.zu.milkbackground.Vo.ReturnVo.ResponseEnum;
+import com.zu.milkbackground.utils.redisUtils.RedisService;
+import com.zu.milkbackground.utils.returnUtils.Response;
+import com.zu.milkbackground.utils.returnUtils.ResponseEnum;
 import com.zu.milkbackground.service.ICommodityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +24,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/commodity")
 public class CommodityController {
-
     @Autowired
     private ICommodityService commodityService;
 
@@ -33,10 +33,6 @@ public class CommodityController {
      */
     @GetMapping("/info")
     public Response getCommodityInfo(){
-        List<CommodityVo> commodityList=commodityService.CommodityInfoAble();
-        if (commodityList == null) {
-            return Response.error(ResponseEnum.FAIL);
-        }
-        return Response.success(commodityList);
+        return commodityService.CommodityInfoAble();
     }
 }

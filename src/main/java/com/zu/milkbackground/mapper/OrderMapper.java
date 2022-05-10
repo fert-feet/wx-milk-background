@@ -3,7 +3,7 @@ package com.zu.milkbackground.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zu.milkbackground.Vo.OrderDetailVo;
 import com.zu.milkbackground.Vo.ProductDetailVo;
-import com.zu.milkbackground.Vo.ReturnVo.OrderVo;
+import com.zu.milkbackground.Vo.OrderVo;
 import com.zu.milkbackground.po.Order;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;

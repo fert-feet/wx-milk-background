@@ -9,6 +9,22 @@ spring:
     username: root
     password: lwz7254591
 
+
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
 server:
   port: 8085
+
+#mybatis-plus:
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#logging:
+#  level:
+#    com:
+#      zu:
+#        milkbackground:
+#          mapper: debug
+
 

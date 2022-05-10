@@ -3,6 +3,7 @@ package com.zu.milkbackground.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zu.milkbackground.Vo.CommodityVo;
 import com.zu.milkbackground.po.Commodity;
+import com.zu.milkbackground.utils.returnUtils.Response;
 
 import java.util.List;
 
@@ -18,7 +19,8 @@ public interface ICommodityService extends IService<Commodity> {
 
     /**
      * 查询所有商品
+     *
      * @return
      */
-    List<CommodityVo> CommodityInfoAble();
+    Response CommodityInfoAble();
 }
